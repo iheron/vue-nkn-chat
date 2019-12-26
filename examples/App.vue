@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <nkn-chat topic="ncdn-group.ncdn-group.24e9f5fb662931f93763a6ff40e58dba385159e9316141532f8b70645c643947"/>
+    <nkn-chat title="TITLE" topic="ncdn-group.ncdn-group.24e9f5fb662931f93763a6ff40e58dba385159e9316141532f8b70645c643947"/>
   </div>
 </template>
 

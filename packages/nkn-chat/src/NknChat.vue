@@ -6,7 +6,7 @@
                     {{title}}
                     <v-spacer/>
                     <v-btn text fab small @click="showChat = false">
-                        <font-awesome-icon icon="times" style="font-size: 1.2rem"/>
+                        <font-awesome-icon icon="times" style="font-size: 20px;"/>
                     </v-btn>
                 </v-card-title>
                 <div class="divider"></div>
@@ -39,7 +39,7 @@
                                 rows="2" @keyup.enter.native="send"
                     />
                     <v-btn class="send" fab small dark @click="send">
-                        <font-awesome-icon icon="paper-plane" style="font-size:1.2rem"/>
+                        <font-awesome-icon icon="paper-plane" style="font-size:20px;"/>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -49,8 +49,8 @@
                 <template v-slot:badge>
                     <div class="count" v-if="unReadCount > 0">{{unReadCount}}</div>
                 </template>
-                <font-awesome-icon v-if="showChat" icon="times" size="2x"/>
-                <font-awesome-icon v-else icon="comment-dots" size="2x"/>
+                <font-awesome-icon v-if="showChat" icon="times" style="font-size:28px;"/>
+                <font-awesome-icon v-else icon="comment-dots" style="font-size:28px;"/>
             </v-badge>
         </v-btn>
 
@@ -71,8 +71,8 @@
       topic: {
         type: String
       },
-      title:{
-        type:String
+      title: {
+        type: String
       }
     },
     data() {
@@ -90,9 +90,12 @@
     },
     computed: {},
     async created() {
-      let owner = this.topic.replace(/^[^\.]*\./,'')
+
       this.clientHelper = new ClientHelper()
-      this.dests = await this.clientHelper.getSubscribers(this.topic, owner)
+      if (this.topic) {
+        let owner = this.topic.replace(/^[^\.]*\./, '')
+        this.dests = await this.clientHelper.getSubscribers(this.topic, owner)
+      }
       this.clientHelper.client.on('connect', () => {
         this.loading = false
       })
@@ -104,7 +107,7 @@
           this.unReadCount++
         }
         let message = JSON.parse(data)
-        if(message.contentType === 'text') {
+        if (message.contentType === 'text') {
           this.items.push({src: src.replace(/^([^\.]*\.*[^\.]{6})[^\.]+$/, '$1'), ...message})
           let data = {
             contentType: 'text',
@@ -123,6 +126,14 @@
         this.$nextTick(() => {
           document.getElementById('message-list').scrollTop = document.getElementById('message-list').scrollHeight
         })
+      },
+      async topic() {
+        if (this.topic) {
+          this.loading = true
+          let owner = this.topic.replace(/^[^\.]*\./, '')
+          this.dests = await this.clientHelper.getSubscribers(this.topic, owner)
+          this.loading = false
+        }
       }
     },
     methods: {
@@ -142,9 +153,9 @@
           this.message = ''
         }
       },
-      toggleChat(){
+      toggleChat() {
         this.showChat = !this.showChat
-        if(this.showChat) this.unReadCount = 0
+        if (this.showChat) this.unReadCount = 0
       }
     }
   }
