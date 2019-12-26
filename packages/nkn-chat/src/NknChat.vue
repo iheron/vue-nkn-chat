@@ -33,7 +33,7 @@
                         </template>
                     </v-list>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions class="actions">
                     <v-textarea class="message-box" v-model="message"
                                 outlined persistent-hint hide-details
                                 rows="2" @keyup.enter.native="send"
