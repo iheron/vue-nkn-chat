@@ -1,7 +1,9 @@
 {
   "name": "vue-nkn-chat",
-  "version": "0.0.3",
-  "private": true,
+  "version": "0.0.4",
+  "private": false,
+  "license": "Apache-2.0",
+  "keyword": "nkn chat",
   "description": "vue-nkn-chat",
   "author": "heron",
   "scripts": {
@@ -9,6 +11,10 @@
     "build": "vue-cli-service build --target lib --name nknChat --dest lib packages/index.js"
   },
   "main": "./lib/nknChat.umd.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iheron/vue-nkn-chat.git"
+  },
   "dependencies": {
     "core-js": "^2.6.5",
     "moment": "^2.24.0",
