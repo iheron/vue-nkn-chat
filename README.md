@@ -20,7 +20,7 @@ Vue.use(nknChat)
 > vue page
 ```vue
 <template>
-  <nkn-chat title="TITLE" topic="YOUR_TOPIC"/>
+  <nkn-chat title="TITLE" send-label="SEND" topic="YOUR_TOPIC"/>
 </template>
 <script>
   import 'vue-nkn-chat/lib/nknChat.css'

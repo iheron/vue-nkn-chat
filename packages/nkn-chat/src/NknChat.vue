@@ -5,6 +5,7 @@
                 <v-card-title>
                     {{title}}
                     <v-spacer/>
+                    <p class="power">(Power by NKN)</p>
                     <v-btn text fab small @click="showChat = false">
                         <font-awesome-icon icon="times" style="font-size: 20px;"/>
                     </v-btn>
@@ -34,12 +35,11 @@
                     </v-list>
                 </v-card-text>
                 <v-card-actions class="actions">
-                    <v-textarea class="message-box" v-model="message"
-                                outlined persistent-hint hide-details
-                                rows="2" @keyup.enter.native="send"
+                    <v-text-field class="message-box" v-model="message" dense
+                                  outlined hide-details @keyup.enter.native="send"
                     />
-                    <v-btn class="send" fab small dark @click="send">
-                        <font-awesome-icon icon="paper-plane" style="font-size:20px;"/>
+                    <v-btn class="send" text dark @click="send">
+                        {{sendLabel}}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -73,6 +73,10 @@
       },
       title: {
         type: String
+      },
+      sendLabel: {
+        type: String,
+        default: 'SEND'
       }
     },
     data() {
