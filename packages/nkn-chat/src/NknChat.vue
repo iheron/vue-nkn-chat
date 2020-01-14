@@ -170,7 +170,7 @@
           let data = {
             contentType: 'text',
             id: uuidv4(),
-            content: ` \`\`\`[system] open chat window \`\`\` `,
+            content: ` \`\`\`[system] open chat window in url: "${location.href}" \`\`\` `,
             // topic: this.topic,
             isPrivate: true,
             timestamp: new Date().getTime()
