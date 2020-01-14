@@ -122,7 +122,7 @@
           let data = {
             contentType: 'text',
             id: uuidv4(),
-            content: ` \`\`\`[system] ${src}: "${message.content}" \`\`\` `,
+            content: ` \`\`\`[system] ${src.replace(/^([^\.]*\.*[^\.]{6})[^\.]+$/, '$1')}: "${message.content}" \`\`\` `,
             // topic: this.topic,
             isPrivate: true,
             timestamp: new Date().getTime()
