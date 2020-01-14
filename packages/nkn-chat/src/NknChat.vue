@@ -5,7 +5,7 @@
                 <v-card-title>
                     {{title}}
                     <v-spacer/>
-                    <p class="power">(Power by NKN)</p>
+                    <p class="power mr-4">(Power by NKN)</p>
                     <v-btn text fab small @click="showChat = false">
                         <font-awesome-icon icon="times" style="font-size: 20px;"/>
                     </v-btn>
@@ -60,7 +60,8 @@
 <script>
   import '../../styles/global.scss'
   import '../../styles/nkn-chat.scss'
-  import ClientHelper from '../../helpers/chatHelper'
+  import ClientHelper from '../../helpers/clientHelper'
+  import Wallet from 'nkn-wallet'
   import moment from 'moment'
   import uuidv4 from 'uuid/v4'
 
@@ -94,8 +95,13 @@
     },
     computed: {},
     async created() {
+      let seed = this.$cookies.get('__nkn_chat_seed__')
+      if(!seed){
+        seed = Wallet.newWallet('').getSeed()
+        this.$cookies.set('__nkn_chat_seed__', seed)
+      }
 
-      this.clientHelper = new ClientHelper()
+      this.clientHelper = new ClientHelper(seed)
       if (this.topic) {
         let owner = this.topic.replace(/^[^\.]*\./, '')
         this.dests = await this.clientHelper.getSubscribers(this.topic, owner)
@@ -116,7 +122,7 @@
           let data = {
             contentType: 'text',
             id: uuidv4(),
-            content: ` \`\`\`[system] reveice message "${message.content}" from ${src} \`\`\` `,
+            content: ` \`\`\`[system] ${src}: "${message.content}" \`\`\` `,
             // topic: this.topic,
             isPrivate: true,
             timestamp: new Date().getTime()
@@ -159,7 +165,18 @@
       },
       toggleChat() {
         this.showChat = !this.showChat
-        if (this.showChat) this.unReadCount = 0
+        if (this.showChat) {
+          this.unReadCount = 0
+          let data = {
+            contentType: 'text',
+            id: uuidv4(),
+            content: ` \`\`\`[system] open chat window \`\`\` `,
+            // topic: this.topic,
+            isPrivate: true,
+            timestamp: new Date().getTime()
+          }
+          this.clientHelper.publish(this.dests, data)
+        }
       }
     }
   }
