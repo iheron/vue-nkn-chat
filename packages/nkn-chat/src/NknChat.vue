@@ -5,10 +5,11 @@
                 <v-card-title>
                     {{title}}
                     <v-spacer/>
-                    <p class="power mr-4">(Power by NKN)</p>
-                    <v-btn text fab small @click="showChat = false">
+                    <p v-if="~lang.indexOf('zh')" class="power mr-4">(由<a href="https://www.nkn.org" target="_blank">NKN</a>提供底层技术支持)</p>
+                    <p v-else class="power mr-4">(powered by <a href="https://www.nkn.org" target="_blank">NKN</a>)</p>
+                    <!--<v-btn text fab small @click="showChat = false">
                         <font-awesome-icon icon="times" style="font-size: 20px;"/>
-                    </v-btn>
+                    </v-btn>-->
                 </v-card-title>
                 <div class="divider"></div>
                 <v-card-text class="container">
@@ -78,6 +79,10 @@
       sendLabel: {
         type: String,
         default: 'SEND'
+      },
+      lang:{
+        type: String,
+        default: document.documentElement.lang
       }
     },
     data() {
@@ -93,7 +98,9 @@
         unReadCount: 0
       }
     },
-    computed: {},
+    computed: {
+
+    },
     async created() {
       let seed = this.$cookies.get('__nkn_chat_seed__')
       if(!seed){
@@ -113,11 +120,12 @@
     },
     mounted() {
       this.clientHelper.client.on('message', (src, data) => {
-        if (!this.showChat) {
-          this.unReadCount++
-        }
+
         let message = JSON.parse(data)
         if (message.contentType === 'text') {
+          if (!this.showChat) {
+            this.unReadCount++
+          }
           this.items.push({src: src.replace(/^([^\.]*\.*[^\.]{6})[^\.]+$/, '$1'), ...message})
           let data = {
             contentType: 'text',
@@ -144,7 +152,8 @@
           this.dests = await this.clientHelper.getSubscribers(this.topic, owner)
           this.loading = false
         }
-      }
+      },
+
     },
     methods: {
       send() {
