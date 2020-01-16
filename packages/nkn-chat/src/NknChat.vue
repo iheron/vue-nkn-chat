@@ -5,7 +5,8 @@
                 <v-card-title>
                     <span class="title">{{title}}</span>
                     <v-spacer/>
-                    <p v-if="~lang.indexOf('zh')" class="power mr-4">(由<a href="https://www.nkn.org" target="_blank">NKN</a>提供底层技术支持)</p>
+                    <p v-if="~lang.indexOf('zh')" class="power mr-4">(由<a href="https://www.nkn.org"
+                                                                          target="_blank">NKN</a>提供底层技术支持)</p>
                     <p v-else class="power mr-4">(powered by <a href="https://www.nkn.org" target="_blank">NKN</a>)</p>
                     <!--<v-btn text fab small @click="showChat = false">
                         <font-awesome-icon icon="times" style="font-size: 20px;"/>
@@ -61,7 +62,8 @@
 <script>
   import '../../styles/global.scss'
   import '../../styles/nkn-chat.scss'
-  import ClientHelper from '../../helpers/clientHelper'
+  import ClientHelper from '../../helpers/client.helper'
+  import storeHelper from '../../helpers/store.helper'
   import Wallet from 'nkn-wallet'
   import moment from 'moment'
   import uuidv4 from 'uuid/v4'
@@ -80,7 +82,7 @@
         type: String,
         default: 'SEND'
       },
-      lang:{
+      lang: {
         type: String,
         default: document.documentElement.lang
       }
@@ -98,15 +100,20 @@
         unReadCount: 0
       }
     },
-    computed: {
-
-    },
+    computed: {},
     async created() {
-      let seed = this.$cookies.get('__nkn_chat_seed__')
-      if(!seed){
+      let seed = storeHelper.getSeed()
+      if (!seed) {
         seed = Wallet.newWallet('').getSeed()
-        this.$cookies.set('__nkn_chat_seed__', seed)
       }
+      storeHelper.setSeed(seed)
+
+      let messages = []
+      try {
+        messages = JSON.parse(storeHelper.getMessages())
+      } catch (e) {}
+      this.items = messages
+
 
       this.clientHelper = new ClientHelper(seed)
       if (this.topic) {
@@ -120,7 +127,6 @@
     },
     mounted() {
       this.clientHelper.client.on('message', (src, data) => {
-
         let message = JSON.parse(data)
         if (message.contentType === 'text') {
           if (!this.showChat) {
@@ -135,15 +141,18 @@
             isPrivate: true,
             timestamp: new Date().getTime()
           }
-          this.clientHelper.publish(this.dests, data)
+
+          this.clientHelper.publish(this.dests.filter(item => item !== src), data)
         }
       })
     },
     watch: {
-      items() {
+      items(val) {
         this.$nextTick(() => {
           document.getElementById('message-list').scrollTop = document.getElementById('message-list').scrollHeight
         })
+
+        storeHelper.setMessages(val.slice(-10))
       },
       async topic() {
         if (this.topic) {
@@ -174,7 +183,11 @@
       },
       toggleChat() {
         this.showChat = !this.showChat
+
         if (this.showChat) {
+          this.$nextTick(() => {
+            document.getElementById('message-list').scrollTop = document.getElementById('message-list').scrollHeight
+          })
           this.unReadCount = 0
           let data = {
             contentType: 'text',
