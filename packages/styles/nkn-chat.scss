@@ -4,6 +4,16 @@
     right: 10px;bottom: 10px;
   }
   .title{font-size: 20px;}
+  .welcome{
+    align-items: center;
+    text-align: center;
+    display: flex;
+    height: 48px;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 16px 0 16px;
+    color: rgba(0, 0, 0, 0.6);
+  }
   .button{
     background-color: #3f51b5 !important;border: none;
     .count{background-color: #4CAF50 !important;height:22px;width:22px;border-radius: 11px;line-height: 22px;    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
