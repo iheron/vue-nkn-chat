@@ -15,6 +15,7 @@
                 <div class="divider"></div>
                 <v-card-text class="container">
                     <v-list three-line flat id="message-list">
+                        <v-subheader v-if="welcome">{{welcome}}</v-subheader>
                         <template v-for="(item, index) in items">
                             <v-list-item :key="index" v-if="item.src !== address">
                                 <v-list-item-content class="message-target">
@@ -85,6 +86,9 @@
       lang: {
         type: String,
         default: document.documentElement.lang
+      },
+      welcome: {
+        type: String
       }
     },
     data() {

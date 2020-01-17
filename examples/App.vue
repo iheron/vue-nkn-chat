@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <nkn-chat lang="en" title="Customer Support Service" send-label="Send" topic="test.nkn.24e9f5fb662931f93763a6ff40e58dba385159e9316141532f8b70645c643947"/>
+    <nkn-chat lang="en" title="Customer Support Service" welcome="Hi, this is NKN's community support team. How are you today and what can we help?" send-label="Send" topic="test.nkn.24e9f5fb662931f93763a6ff40e58dba385159e9316141532f8b70645c643947"/>
   </div>
 </template>
 
