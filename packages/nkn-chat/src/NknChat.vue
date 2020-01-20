@@ -172,16 +172,17 @@
       send() {
         if (this.message.trim()) {
           let message = this.message
+          let now = new Date().getTime()
           let data = {
             contentType: 'text',
             id: uuidv4(),
             content: message,
             // topic: this.topic,
             isPrivate: true,
-            timestamp: new Date().getTime()
+            timestamp: now
           }
           this.clientHelper.publish(this.dests, data)
-          this.items.push({src: this.address, content: message})
+          this.items.push({src: this.address, content: message, timestamp: now})
           this.message = ''
         }
       },
