@@ -11,7 +11,7 @@
 }
 textarea{resize:none !important;}
 .v-text-field--outlined fieldset{padding-left: 8px;}
-.v-text-field .v-label{transform-origin: top left;left: 0;}
+.v-text-field .v-label{transform-origin: top left;left: 0 !important;}
 .v-list-item__title, .v-list-item__subtitle{
   white-space: inherit !important;
 }

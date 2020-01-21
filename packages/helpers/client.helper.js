@@ -64,17 +64,17 @@ export default class ClientHelper {
 
   async getSubscribers(topic, owner) {
     let i = 0
-    let members = [owner]
+    let members = []
     while (true) {
-      let res = await this.client.clients[0].getSubscription(`${topic}`, `__${i}__.${owner}`)
+      let res = await this.client.clients[0].getSubscription(`${topic}`, `__${i}__.__permission__.${owner}`)
       let meta
       try {
         meta = JSON.parse(res.meta)
       } catch (e) {
         break
       }
-      if (meta && meta.members && meta.members.length > 0) {
-        members = members.concat(meta.members)
+      if (meta && meta.accept && meta.accept.length > 0) {
+        meta.accept.forEach(x=> members.push(x.addr))
       } else {
         break
       }
@@ -84,7 +84,6 @@ export default class ClientHelper {
   }
 
   async publish(dests, data) {
-
     await this.client.send(dests, JSON.stringify(data))
   }
 }

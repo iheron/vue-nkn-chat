@@ -56,7 +56,6 @@
                 <font-awesome-icon v-else icon="comment-dots" style="font-size:28px;"/>
             </v-badge>
         </v-btn>
-
     </div>
 </template>
 
@@ -115,9 +114,9 @@
       let messages = []
       try {
         messages = JSON.parse(storeHelper.getMessages())
-      } catch (e) {}
+      } catch (e) {
+      }
       this.items = messages
-
 
       this.clientHelper = new ClientHelper(seed)
       if (this.topic) {
@@ -197,7 +196,9 @@
           let data = {
             contentType: 'text',
             id: uuidv4(),
-            content: ` \`\`\`[system] open chat window in url: "${location.href}" \`\`\` `,
+            content: ` \`[system] event: open chat window\`
+            \`url: ${location.href}\`
+            \`topic: ${this.topic.replace(/^([^\.]*)\.[^\.]+$/, '$1')}\``,
             // topic: this.topic,
             isPrivate: true,
             timestamp: new Date().getTime()
