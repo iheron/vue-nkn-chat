@@ -5,9 +5,9 @@
                 <v-card-title>
                     <span class="title">{{title}}</span>
                     <v-spacer/>
-                    <p v-if="~lang.indexOf('zh')" class="power mr-4">(由<a href="https://www.nkn.org"
-                                                                          target="_blank">NKN</a>提供底层技术支持)</p>
-                    <p v-else class="power mr-4">(powered by <a href="https://www.nkn.org" target="_blank">NKN</a>)</p>
+                    <span v-if="~lang.indexOf('zh')" class="power mr-4">(由<a href="https://www.nkn.org"
+                                                                          target="_blank">NKN</a>提供底层技术支持)</span>
+                    <span v-else class="power mr-4">(powered by <a href="https://www.nkn.org" target="_blank">NKN</a>)</span>
                     <!--<v-btn text fab small @click="showChat = false">
                         <font-awesome-icon icon="times" style="font-size: 20px;"/>
                     </v-btn>-->
