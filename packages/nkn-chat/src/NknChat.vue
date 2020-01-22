@@ -27,7 +27,7 @@
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item :key="index" v-else>
-                                <v-list-item-content class="message-mine">
+                                <v-list-item-content class="message-mine" style="text-align: end;">
                                     <v-list-item-subtitle>
                                         <span class="time">{{moment(item.timestamp).format('YYYY-MM-DD HH:mm')}}</span>
                                     </v-list-item-subtitle>
