@@ -47,7 +47,7 @@
                 </v-card-actions>
             </v-card>
         </transition>
-        <v-btn class="button" :loading="loading" @click="toggleChat" fab large dark color="blue">
+        <v-btn class="button" :loading="loading" @click="toggleChat" fab large dark>
             <v-badge>
                 <template v-slot:badge>
                     <div class="count" v-if="unReadCount > 0">{{unReadCount}}</div>
